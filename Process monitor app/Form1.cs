@@ -1,18 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
 namespace Process_monitoring
 {
     public partial class monitoring : Form
     {
+
+
         TimeSpan rtime;
         Process[] processes;
         Process[] pbyname;
@@ -21,10 +17,11 @@ namespace Process_monitoring
         {
             InitializeComponent();
         }
+
         public void submit_Click(object sender, EventArgs e)
         {
             textboxcheck();
-            progrm();    
+            progrm();
         }
         public void worktime_TextChanged(object sender, EventArgs e)
         {
@@ -44,8 +41,8 @@ namespace Process_monitoring
         }
         public void monitoring_Load(object sender, EventArgs e)
         {
-            ListProcesses();   
-        
+            ListProcesses();
+
         }
         private void ListProcesses()
         {
@@ -66,13 +63,16 @@ namespace Process_monitoring
             pid.Text = listBox1.SelectedItem.ToString();
         }
         private void timer1_Tick(object sender, EventArgs e)
-        {if (processes!=null)
-            MessageBox.Show("Program is on for: " + rtime.TotalMinutes.ToString("F") + " minutes");
+        { if (processes != null)
+                MessageBox.Show("Program is on for: " + rtime.TotalMinutes.ToString("F") + " minutes");
         }
         private void timer2_Tick(object sender, EventArgs e)
-        {   
-                timer2.Interval = 1000;
-                progrm();
+        {
+            timer2.Interval = 1000;
+            progrm();
+
+
+
         }
         public void textboxcheck()
         {
@@ -106,14 +106,14 @@ namespace Process_monitoring
             {
                 if (pbyname.Length > 0)
                 {
-                   
+
                     textBox2.Text = "Started";
                     foreach (Process p in pbyname)
                     {
                         try
                         {
                             rtime = DateTime.Now - p.StartTime;
-                            textBox1.Text =(rtime.TotalMinutes.ToString("F"));
+                            textBox1.Text = (rtime.TotalMinutes.ToString("F"));
                             float mworktime = (float.Parse(worktime.Text) * 1000) * 60;
                             timer1.Interval = (int.Parse(mofreq.Text) * 1000) * 60;
                             timer1.Enabled = true;
@@ -131,7 +131,7 @@ namespace Process_monitoring
                                 mofreq.Text = "";
                                 worktime.Text = "";
                                 textBox1.Text = "";
-                            } 
+                            }
                         }
                         catch (Win32Exception except)
                         {
@@ -153,10 +153,19 @@ namespace Process_monitoring
             textBox2.Text = "Stopped";
             timer1.Stop();
             timer2.Stop();
-            listBox1.Items.Clear();
             pid.Text = "";
             mofreq.Text = "";
             worktime.Text = "";
+            textBox1.Text = "";
+
+        }
+
+        private void submit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Q)
+            {
+                standby();
+            }
         }
     }
 }
