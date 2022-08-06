@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Threading;
 namespace Process_monitoring
 {
-
     public partial class monitoring : Form
     {
         TimeSpan rtime;
@@ -22,11 +21,10 @@ namespace Process_monitoring
         {
             InitializeComponent();
         }
-
         public void submit_Click(object sender, EventArgs e)
         {
             textboxcheck();
-            progrm();
+            progrm();    
         }
         public void worktime_TextChanged(object sender, EventArgs e)
         {
@@ -36,7 +34,6 @@ namespace Process_monitoring
                 worktime.Text = "";
             }
         }
-
         public void mofreq_TextChanged(object sender, EventArgs e)
         {
             float ffValue;
@@ -45,13 +42,10 @@ namespace Process_monitoring
                 mofreq.Text = "";
             }
         }
-
         public void monitoring_Load(object sender, EventArgs e)
         {
-            ListProcesses();
-            timer2.Stop();
-            timer1.Stop();
-            
+            ListProcesses();   
+        
         }
         private void ListProcesses()
         {
@@ -71,21 +65,14 @@ namespace Process_monitoring
         {
             pid.Text = listBox1.SelectedItem.ToString();
         }
-
         private void timer1_Tick(object sender, EventArgs e)
-        {
+        {if (processes!=null)
             MessageBox.Show("Program is on for: " + rtime.TotalMinutes.ToString("F") + " minutes");
-            timer2.Start();
         }
-
         private void timer2_Tick(object sender, EventArgs e)
-        {if(timer1.Enabled)
-            {
-                timer2.Start();
+        {   
                 timer2.Interval = 1000;
                 progrm();
-            }
-
         }
         public void textboxcheck()
         {
@@ -93,63 +80,58 @@ namespace Process_monitoring
             {
                 case true:
                     MessageBox.Show("Please insert a process name");
-
-                    break;
-                case false:
-
                     break;
             }
-
             switch (String.IsNullOrEmpty(worktime.Text))
             {
                 case true:
                     MessageBox.Show("Please insert process run time");
-
-                    break;
-                case false:
-
                     break;
             }
             switch (String.IsNullOrEmpty(mofreq.Text))
             {
                 case true:
                     MessageBox.Show("Please insert app monitor frequency time");
-
                     break;
                 case false:
-
                     break;
             }
-
         }
         public void progrm()
         {
+            timer2.Start();
             prbyname = pid.Text;
             pbyname = Process.GetProcessesByName(prbyname);
             if ((String.IsNullOrEmpty(pid.Text) || String.IsNullOrEmpty(worktime.Text) || String.IsNullOrEmpty(mofreq.Text)) != true)
             {
                 if (pbyname.Length > 0)
                 {
+                   
+                    textBox2.Text = "Started";
                     foreach (Process p in pbyname)
                     {
-
                         try
                         {
                             rtime = DateTime.Now - p.StartTime;
-                            textBox1.Text = rtime.TotalSeconds.ToString("F");
+                            textBox1.Text =(rtime.TotalMinutes.ToString("F"));
                             float mworktime = (float.Parse(worktime.Text) * 1000) * 60;
+                            timer1.Interval = (int.Parse(mofreq.Text) * 1000) * 60;
+                            timer1.Enabled = true;
+                            timer1.Start();
                             if (mworktime < (float)rtime.TotalMilliseconds)
 
                             {
                                 p.Kill();
+                                MessageBox.Show("Process ran for: " + (int)rtime.TotalMinutes + " minutes");
                                 timer2.Stop();
+                                timer1.Stop();
                                 ListProcesses();
-                            }
-                           
-                            timer1.Interval= (int.Parse(mofreq.Text) * 1000) * 60;
-                            timer1.Enabled = true;
-                            timer1.Start();
-                               
+                                textBox2.Text = "Stopped";
+                                pid.Text = "";
+                                mofreq.Text = "";
+                                worktime.Text = "";
+                                textBox1.Text = "";
+                            } 
                         }
                         catch (Win32Exception except)
                         {
@@ -165,13 +147,16 @@ namespace Process_monitoring
                     textBox1.Text = "Process is not started";
                 }
             }
-
-
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void standby()
         {
-
+            textBox2.Text = "Stopped";
+            timer1.Stop();
+            timer2.Stop();
+            listBox1.Items.Clear();
+            pid.Text = "";
+            mofreq.Text = "";
+            worktime.Text = "";
         }
     }
 }

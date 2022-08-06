@@ -1,0 +1,11 @@
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\bin\Release\Process monitor app.exe.config
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\bin\Release\Process monitor app.exe
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\bin\Release\Process monitor app.pdb
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process monitor app.csproj.AssemblyReference.cache
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process monitor app.csproj.SuggestedBindingRedirects.cache
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process_monitoring.monitoring.resources
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process_monitor_app.Properties.Resources.resources
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process monitor app.csproj.GenerateResource.cache
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process monitor app.csproj.CoreCompileInputs.cache
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process monitor app.exe
+C:\Users\Marus\source\repos\Process monitor app\Process monitor app\obj\Release\Process monitor app.pdb
